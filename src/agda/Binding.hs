@@ -1,26 +1,26 @@
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# OPTIONS_GHC -Wall #-}
 
-module ExampleHaskellWheel.Binding where
+module Binding where
 
 import Control.Exception (Exception (..), SomeException (..), handle)
 import Control.Monad (forM_)
 import Data.Version (showVersion)
 import Foreign.C (CInt (..))
 import Foreign.C.String (CString, newCString)
-import Paths_example_haskell_wheel (version)
+import Paths_agda_python (version)
 import System.Environment (getArgs)
 import System.Exit (ExitCode (..))
 import System.IO (hPutStrLn, stderr)
 import Text.Read (readMaybe)
 
-foreign export ccall hs_example_haskell_wheel_version :: IO CString
+foreign export ccall hs_agda_version :: IO CString
 
-hs_example_haskell_wheel_version :: IO CString
-hs_example_haskell_wheel_version =
+hs_agda_version :: IO CString
+hs_agda_version =
   newCString (showVersion version)
 
-foreign export ccall hs_example_haskell_wheel_main :: IO CInt
+foreign export ccall hs_agda_main :: IO CInt
 
 exitHandler :: ExitCode -> IO CInt
 exitHandler ExitSuccess = return 0
@@ -30,8 +30,8 @@ uncaughtExceptionHandler :: SomeException -> IO CInt
 uncaughtExceptionHandler (SomeException e) =
   hPutStrLn stderr (displayException e) >> return 1
 
-hs_example_haskell_wheel_main :: IO CInt
-hs_example_haskell_wheel_main =
+hs_agda_main :: IO CInt
+hs_agda_main =
   handle uncaughtExceptionHandler $
     handle exitHandler $ do
       getArgs >>= \args ->
