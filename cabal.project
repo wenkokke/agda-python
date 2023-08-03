@@ -1,0 +1,6 @@
+packages:
+  Agda-Python.cabal
+
+if !os(windows)
+  package Agda
+    flags: +optimise-heavily

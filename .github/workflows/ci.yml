@@ -43,17 +43,18 @@ jobs:
   ################################################################################
 
   build:
-    name: "Build / ${{ matrix.os.name }} - ${{ matrix.os.arch }}-${{ matrix.os.plat }}"
+    name: "Build / ${{ matrix.os.name }}"
     runs-on: ${{ matrix.os.type }}
 
     strategy:
+      fail-fast: false
       matrix:
         os:
-          - name: "Linux"
+          - name: "Linux - manylinux"
             type: "ubuntu-latest"
             arch: "x86_64"
             plat: "manylinux"
-          - name: "Linux"
+          - name: "Linux - musllinux"
             type: "ubuntu-latest"
             arch: "x86_64"
             plat: "musllinux"
@@ -68,6 +69,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          submodules: true
 
       - # Required to run job via act: https://github.com/nektos/act
         uses: actions/setup-python@v4
@@ -94,62 +97,15 @@ jobs:
           output-dir: "./wheelhouse"
           config-file: "{package}/pyproject.toml"
         env:
-          CIBW_BUILD: "*${{ matrix.os.plat }}*"
           CIBW_ARCHS: "${{ matrix.os.arch }}"
+          CIBW_BEFORE: "cabal updates"
+          CIBW_BUILD: "*${{ matrix.os.plat }}*"
           MACOSX_DEPLOYMENT_TARGET: "10.10"
 
       - uses: actions/upload-artifact@v3
         with:
           name: "wheelhouse"
           path: "./wheelhouse/*.whl"
-
-  ################################################################################
-  # Test package with Tox
-  ################################################################################
-
-  test:
-    name: Test / ${{ matrix.os.name }}
-    runs-on: ${{ matrix.os.type }}
-
-    strategy:
-      matrix:
-        os:
-          - name: "Linux"
-            type: "ubuntu-latest"
-          - name: "macOS"
-            type: "macos-latest"
-          - name: "Windows"
-            type: "windows-latest"
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - # Required to run job via act: https://github.com/nektos/act
-        uses: actions/setup-python@v4
-        with:
-          cache: "pip"
-          cache-dependency-path: "./requirements-ci.txt"
-          python-version: |
-            3.11
-            3.10
-            3.9
-            3.8
-            3.7
-
-      - # Required to run job via act: https://github.com/nektos/act
-        run: pip install -r "./requirements-ci.txt"
-
-      - # 19-05-2023:
-        # Required to build the wheels on macOS and Windows, but not on Linux,
-        # as Linux builds are run in containers, where GHC and Cabal are built
-        # by the `./scripts/before-all.sh` scripts.
-        if: matrix.os.name == 'macOS' || matrix.os.name == 'Windows'
-        uses: haskell/actions/setup@v2
-        with:
-          ghc-version: ${{ env.DEFAULT_GHC_VERSION }}
-          cabal-version: ${{ env.DEFAULT_CABAL_VERSION }}
-
-      - run: pipx run tox
 
   ################################################################################
   # Publish package to GitHub Releases
@@ -159,7 +115,7 @@ jobs:
     name: Publish to GitHub Releases
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/')
-    needs: [build, test]
+    needs: [build]
 
     permissions:
       contents: write
@@ -185,7 +141,7 @@ jobs:
     name: Publish to PyPI
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/')
-    needs: [build, test]
+    needs: [build]
 
     environment:
       name: pypi

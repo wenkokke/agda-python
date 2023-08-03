@@ -7,7 +7,7 @@ from ._binding import (
     unsafe_hs_exit,
 )
 
-VERSION: str = "1.2.0"
+VERSION: str = "2.6.3"
 
 
 def version() -> str:
@@ -18,9 +18,9 @@ def version() -> str:
         unsafe_hs_exit()
 
 
-def main(args: List[str]) -> None:
+def main(args: List[str]) -> int:
     try:
         unsafe_hs_init(args)
-        unsafe_hs_agda_main()
+        return unsafe_hs_agda_main()
     finally:
         unsafe_hs_exit()

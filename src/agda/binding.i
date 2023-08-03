@@ -2,6 +2,14 @@
 %{
 #include "Binding_stub.h"
 
+void unsafe_hs_init(int argc, char **argv) {
+  hs_init(&argc, &argv);
+}
+
+void unsafe_hs_exit() {
+  hs_exit();
+}
+
 char * unsafe_hs_agda_version() {
   return hs_agda_version();
 }
@@ -10,12 +18,12 @@ int unsafe_hs_agda_main() {
   return hs_agda_main();
 }
 
-void unsafe_hs_init(int argc, char **argv) {
-  hs_init(&argc, &argv);
+char * unsafe_hs_agda_mode_version() {
+  return hs_agda_mode_version();
 }
 
-void unsafe_hs_exit() {
-  hs_exit();
+int unsafe_hs_agda_mode_main() {
+  return hs_agda_mode_main();
 }
 %}
 
@@ -45,7 +53,11 @@ void unsafe_hs_exit() {
   free((char *) $2);
 }
 
-char * unsafe_hs_agda_version();
-int unsafe_hs_agda_main();
 void unsafe_hs_init(int argc, char **argv);
 void unsafe_hs_exit();
+
+char * unsafe_hs_agda_version();
+int unsafe_hs_agda_main();
+
+char * unsafe_hs_agda_mode_version();
+int unsafe_hs_agda_mode_main();
