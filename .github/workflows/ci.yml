@@ -31,6 +31,8 @@ defaults:
     shell: sh
 
 env:
+  # NOTE: cibuildwheel builds manylinux wheels in a container, and the versions
+  #       of GHC and Cabal are hardcoded in the `before-all-$ID.sh` scripts.
   DEFAULT_GHC_VERSION: "9.4.4"
   DEFAULT_CABAL_VERSION: "3.10.1.0"
   DEFAULT_PYTHON_VERSION: "3.11"
@@ -41,7 +43,7 @@ jobs:
   ################################################################################
 
   build:
-    name: "Build / ${{ matrix.os.name }} - ${{ matrix.os.arch }}"
+    name: "Build / ${{ matrix.os.name }} - ${{ matrix.os.arch }}-${{ matrix.os.plat }}"
     runs-on: ${{ matrix.os.type }}
 
     strategy:
@@ -50,12 +52,19 @@ jobs:
           - name: "Linux"
             type: "ubuntu-latest"
             arch: "x86_64"
+            plat: "manylinux"
+          - name: "Linux"
+            type: "ubuntu-latest"
+            arch: "x86_64"
+            plat: "musllinux"
           - name: "macOS"
             type: "macos-latest"
             arch: "x86_64"
+            plat: "macosx"
           - name: "Windows"
             type: "windows-latest"
             arch: "AMD64"
+            plat: "win"
 
     steps:
       - uses: actions/checkout@v3
@@ -82,16 +91,17 @@ jobs:
 
       - uses: pypa/cibuildwheel@v2.14.1
         with:
-          output-dir: "./dist"
+          output-dir: "./wheelhouse"
           config-file: "{package}/pyproject.toml"
         env:
+          CIBW_BUILD: "*${{ matrix.os.plat }}*"
           CIBW_ARCHS: "${{ matrix.os.arch }}"
           MACOSX_DEPLOYMENT_TARGET: "10.10"
 
       - uses: actions/upload-artifact@v3
         with:
-          name: "dist"
-          path: "./dist/*.whl"
+          name: "wheelhouse"
+          path: "./wheelhouse/*.whl"
 
   ################################################################################
   # Test package with Tox
@@ -155,16 +165,16 @@ jobs:
       contents: write
 
     steps:
-      - name: Download dist
+      - name: Download wheelhouse
         uses: actions/download-artifact@v3
         with:
-          name: "dist"
-          path: "./dist"
+          name: "wheelhouse"
+          path: "./wheelhouse"
 
       - name: Publish to GitHub Releases
         uses: softprops/action-gh-release@v1
         with:
-          files: "./dist/*.whl"
+          files: "./wheelhouse/*.whl"
           fail_on_unmatched_files: true
 
   ################################################################################
@@ -185,13 +195,13 @@ jobs:
       id-token: write # IMPORTANT: this permission is mandatory for trusted publishing
 
     steps:
-      - name: Download dist
+      - name: Download wheelhouse
         uses: actions/download-artifact@v3
         with:
-          name: "dist"
-          path: "./dist"
+          name: "wheelhouse"
+          path: "./wheelhouse"
 
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
-          packages-dir: "./dist"
+          packages-dir: "./wheelhouse"
