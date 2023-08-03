@@ -1,9 +1,9 @@
 import sys
-import example_haskell_wheel
+import agda
 
 
 def main() -> None:
-    example_haskell_wheel.main(sys.argv)
+    agda.main(sys.argv)
 
 
 if __name__ == "__main__":

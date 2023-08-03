@@ -1,13 +1,13 @@
 %module binding
 %{
-#include "ExampleHaskellWheel/Binding_stub.h"
+#include "Binding_stub.h"
 
-char * unsafe_hs_example_haskell_wheel_version() {
-  return hs_example_haskell_wheel_version();
+char * unsafe_hs_agda_version() {
+  return hs_agda_version();
 }
 
-int unsafe_hs_example_haskell_wheel_main() {
-  return hs_example_haskell_wheel_main();
+int unsafe_hs_agda_main() {
+  return hs_agda_main();
 }
 
 void unsafe_hs_init(int argc, char **argv) {
@@ -45,7 +45,7 @@ void unsafe_hs_exit() {
   free((char *) $2);
 }
 
-char * unsafe_hs_example_haskell_wheel_version();
-int unsafe_hs_example_haskell_wheel_main();
+char * unsafe_hs_agda_version();
+int unsafe_hs_agda_main();
 void unsafe_hs_init(int argc, char **argv);
 void unsafe_hs_exit();
