@@ -1,0 +1,134 @@
+[build-system]
+requires = [
+  "find_libpython >=0.3,<0.4; sys_platform == 'win32'",
+  "setuptools >=45",
+  "swig >=4,<5"
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "example-haskell-wheel"
+version = "1.2.0"
+authors = [{ name = "Wen Kokke", email = "wenkokke@users.noreply.github.com" }]
+description = "An experiment in publishing a Haskell library as a Python Wheel."
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.7.1,<3.12"
+
+[project.optional-dependencies]
+mypy = ["types_setuptools >=45"]
+test = ["pytest >=7.1,<8"]
+
+[project.scripts]
+"example-haskell-wheel" = "example_haskell_wheel.__main__:main"
+
+[tool.bumpver]
+current_version = "v1.2.0"
+version_pattern = "vMAJOR.MINOR.PATCH[-TAG]"
+commit_message = "Bump version {old_version} -> {new_version}"
+commit = true
+tag = true
+push = true
+
+[tool.bumpver.file_patterns]
+"pyproject.toml" = [
+  '^version = "{pep440_version}"$',
+  '^current_version = "{version}"$',
+]
+"src/example_haskell_wheel/__init__.py" = [
+  '^VERSION: str = "{pep440_version}"$',
+]
+"example-haskell-wheel.cabal" = ['^version:         {pep440_version}$']
+
+[tool.cibuildwheel]
+# 18-04-2023:
+# Cross-compilation does not work with GHC and Cabal.
+archs = ["native"]
+build-frontend = "build"
+build = [
+  # GHC provides x86_64 and arm64 builds for macOS.
+  "*-macosx_x86_64",
+  # GHC provides an AMD64 build for Windows.
+  "*-win_amd64",
+  # GHC provides an x86_64 build for CentOS 7 (manylinux2014).
+  "*-manylinux_x86_64",
+  # GHC provides an i686 build for Debian 9 (manylinux_2014 compatible).
+  "*-manylinux_i686",
+  # GHC provides an aarch64 build for Debian 10 (manylinux_2_28 compatible).
+  "*-manylinux_aarch64",
+  # GHC provides an x86_64 build for Alpine 3.12 (manylinux_2_28 compatible).
+  "*-musllinux_x86_64",
+]
+skip = [
+  # 18-04-2023:
+  # PyPy builds do not work.
+  "pp*",
+]
+test-command = "pytest {package}/tests"
+test-extras = "test"
+# 19-06-2023:
+# Use custom manylinux and musllinux images with GHC 9.4.4 preinstalled.
+manylinux-aarch64-image = "wenkokke/manylinux_2_28_ghc944_aarch64"
+manylinux-i686-image = "wenkokke/manylinux2014_ghc944_i686"
+manylinux-x86_64-image = "wenkokke/manylinux2014_ghc944_x86_64"
+musllinux-x86_64-image = "wenkokke/musllinux_1_1_ghc944_x86_64"
+
+[tool.mypy]
+mypy_path = "src"
+python_version = 3.7
+strict = true
+implicit_reexport = false
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.tox]
+legacy_tox_ini = """
+[tox]
+min_version = 4
+env_list = py{37,38,39,310,311}-{lin,mac,win}
+
+[testenv:py{37,38,39,310,311}-{lin,mac,win}]
+package = external
+package_env = build-{env_name}
+platform =
+  lin: linux
+  mac: darwin
+  win: win32
+allowlist_externals = sh
+extras =
+  test
+commands =
+  {env_python} -m pytest {posargs}
+
+[testenv:build-py{37,38,39,310,311}-{lin,mac,win}]
+deps =
+  build
+  auditwheel; sys_platform == 'linux'
+  delocate; sys_platform == 'darwin'
+set_env =
+  env_python = {env_python}
+  package_root = {package_root}
+  dist_dir = {package_root}{/}dist
+  dist_tmp_dir = {env_tmp_dir}{/}dist
+package_glob =
+  py37-lin: {env:dist_dir}{/}*cp37*manylinux*.whl
+  py38-lin: {env:dist_dir}{/}*cp38*manylinux*.whl
+  py39-lin: {env:dist_dir}{/}*cp39*manylinux*.whl
+  py310-lin: {env:dist_dir}{/}*cp310*manylinux*.whl
+  py311-lin: {env:dist_dir}{/}*cp311*manylinux*.whl
+  py37-mac: {env:dist_dir}{/}*cp37*macosx*.whl
+  py38-mac: {env:dist_dir}{/}*cp38*macosx*.whl
+  py39-mac: {env:dist_dir}{/}*cp39*macosx*.whl
+  py310-mac: {env:dist_dir}{/}*cp310*macosx*.whl
+  py311-mac: {env:dist_dir}{/}*cp311*macosx*.whl
+  py37-win: {env:dist_dir}{/}*cp37*win*.whl
+  py38-win: {env:dist_dir}{/}*cp38*win*.whl
+  py39-win: {env:dist_dir}{/}*cp39*win*.whl
+  py310-win: {env:dist_dir}{/}*cp310*win*.whl
+  py311-win: {env:dist_dir}{/}*cp311*win*.whl
+allowlist_externals =
+  sh
+commands =
+  sh {package_root}/scripts/build-wheel.sh
+"""
