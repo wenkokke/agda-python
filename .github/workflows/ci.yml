@@ -110,6 +110,7 @@ jobs:
           output-dir: "./wheelhouse"
           config-file: "{package}/pyproject.toml"
         env:
+          CIBW_BUILD: "*${{ matrix.os.plat }}*"
           CIBW_ARCHS: "${{ matrix.os.arch }}"
           CIBW_BUILD: "*${{ matrix.os.plat }}*"
           MACOSX_DEPLOYMENT_TARGET: "10.10"
