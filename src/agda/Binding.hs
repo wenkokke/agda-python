@@ -3,16 +3,17 @@
 
 module Binding where
 
+import Agda.Main (runAgda)
 import Control.Exception (Exception (..), SomeException (..), handle)
-import Control.Monad (forM_)
 import Data.Version (showVersion)
 import Foreign.C (CInt (..))
 import Foreign.C.String (CString, newCString)
-import Paths_agda_python (version)
-import System.Environment (getArgs)
+import qualified Main as AgdaMode (main)
+import Paths_Agda_Python (version)
 import System.Exit (ExitCode (..))
 import System.IO (hPutStrLn, stderr)
-import Text.Read (readMaybe)
+
+-- Bindings for agda
 
 foreign export ccall hs_agda_version :: IO CString
 
@@ -22,6 +23,32 @@ hs_agda_version =
 
 foreign export ccall hs_agda_main :: IO CInt
 
+hs_agda_main :: IO CInt
+hs_agda_main =
+  handle uncaughtExceptionHandler $
+    handle exitHandler $ do
+      runAgda []
+      return 0
+
+-- Bindings for agda-mode
+
+foreign export ccall hs_agda_mode_version :: IO CString
+
+hs_agda_mode_version :: IO CString
+hs_agda_mode_version =
+  newCString (showVersion version)
+
+foreign export ccall hs_agda_mode_main :: IO CInt
+
+hs_agda_mode_main :: IO CInt
+hs_agda_mode_main =
+  handle uncaughtExceptionHandler $
+    handle exitHandler $ do
+      AgdaMode.main
+      return 0
+
+-- Exception handlers
+
 exitHandler :: ExitCode -> IO CInt
 exitHandler ExitSuccess = return 0
 exitHandler (ExitFailure n) = return (fromIntegral n)
@@ -29,36 +56,3 @@ exitHandler (ExitFailure n) = return (fromIntegral n)
 uncaughtExceptionHandler :: SomeException -> IO CInt
 uncaughtExceptionHandler (SomeException e) =
   hPutStrLn stderr (displayException e) >> return 1
-
-hs_agda_main :: IO CInt
-hs_agda_main =
-  handle uncaughtExceptionHandler $
-    handle exitHandler $ do
-      getArgs >>= \args ->
-        forM_ args $ \arg -> do
-          case readMaybe arg of
-            Just n -> putStrLn $ "fib " <> show n <> " -> " <> show (fib n)
-            Nothing -> putStrLn $ "fib " <> arg <> " -> error"
-      return 0
-
--- Taken from:
--- https://wiki.haskell.org/The_Fibonacci_sequence#Fastest_Fib_in_the_West
-fib :: Integer -> Integer
-fib n = snd . foldl fib_ (1, 0) . map (toEnum . fromIntegral) $ unfoldl divs n
-  where
-    unfoldl :: (Integer -> Maybe (Integer, Integer)) -> Integer -> [Integer]
-    unfoldl f x = case f x of
-      Nothing -> []
-      Just (u, v) -> unfoldl f v ++ [u]
-
-    divs :: Integer -> Maybe (Integer, Integer)
-    divs 0 = Nothing
-    divs k = Just (uncurry (flip (,)) (k `divMod` 2))
-
-    fib_ :: (Integer, Integer) -> Bool -> (Integer, Integer)
-    fib_ (f, g) p
-      | p = (f * (f + 2 * g), f `pow` 2 + g `pow` 2)
-      | otherwise = (f `pow` 2 + g `pow` 2, g * (2 * f - g))
-
-    pow :: Integer -> Integer -> Integer
-    pow = (^)

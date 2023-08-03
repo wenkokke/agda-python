@@ -1,4 +1,4 @@
-global-include *.cabal
-global-include *.def
-global-include *.hs
-global-include *.i
+include Agda-Python.cabal
+include src/agda/binding.def
+include src/agda/Binding.hs
+include src/agda/binding.i

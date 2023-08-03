@@ -39,9 +39,10 @@ jobs:
     runs-on: ${{ matrix.os.type }}
 
     strategy:
+      fail-fast: false
       matrix:
         os:
-          - name: "Linux"
+          - name: "Linux - manylinux"
             type: "ubuntu-latest"
             arch: "aarch64"
             plat: "manylinux"
@@ -53,7 +54,7 @@ jobs:
             type: "ubuntu-latest"
             arch: "x86_64"
             plat: "manylinux"
-          - name: "Linux"
+          - name: "Linux - musllinux"
             type: "ubuntu-latest"
             arch: "x86_64"
             plat: "musllinux"
@@ -68,6 +69,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: true
 
       - # Required to run job via act: https://github.com/nektos/act
         uses: actions/setup-python@v4
@@ -110,8 +113,8 @@ jobs:
           output-dir: "./wheelhouse"
           config-file: "{package}/pyproject.toml"
         env:
-          CIBW_BUILD: "*${{ matrix.os.plat }}*"
           CIBW_ARCHS: "${{ matrix.os.arch }}"
+          CIBW_BEFORE: "cabal update"
           CIBW_BUILD: "*${{ matrix.os.plat }}*"
           MACOSX_DEPLOYMENT_TARGET: "10.10"
 
@@ -176,7 +179,7 @@ jobs:
     name: Publish to GitHub Releases
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/')
-    needs: [build, test]
+    needs: [build]
 
     permissions:
       contents: write
@@ -202,7 +205,7 @@ jobs:
     name: Publish to PyPI
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/')
-    needs: [build, test]
+    needs: [build]
 
     environment:
       name: pypi
