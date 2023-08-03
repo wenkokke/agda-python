@@ -1,0 +1,3 @@
+[submodule "vendor/agda"]
+	path = vendor/agda
+	url = https://github.com/agda/agda.git
