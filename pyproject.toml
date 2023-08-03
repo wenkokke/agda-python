@@ -8,7 +8,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "agda"
-version = "2.6.3"
+version = "2.6.3.post1"
 authors = [{ name = "Wen Kokke", email = "wenkokke@users.noreply.github.com" }]
 description = "An experiment in publishing a Haskell library as a Python Wheel."
 readme = "README.md"
@@ -36,31 +36,11 @@ test = ["pytest >=7.1,<8"]
 "agda" = "agda.__main__:main"
 "agda-mode" = "agda.mode.__main__:main"
 
-[tool.bumpver]
-current_version = "2.6.3"
-version_pattern = "MAJOR.MINOR.PATCH[.NUM]"
-commit_message = "Bump version {old_version} -> {new_version}"
-tag_message = "v{new_version}"
-tag_scope = "default"
-commit = true
-tag = true
-push = true
-
-[tool.bumpver.file_patterns]
-"pyproject.toml" = [
-  '^version = "{version}"$',
-  '^current_version = "{version}"$',
-]
-"src/agda/__init__.py" = ['^VERSION: str = "{version}"$']
-"Agda-Python.cabal" = [
-  '^version:         {version}$',
-  '^    , Agda       =={version}$',
-]
-
 [tool.cibuildwheel]
 # 18-04-2023:
 # Cross-compilation does not work with GHC and Cabal.
 archs = ["native"]
+before-all = "cabal update"
 build-frontend = "build"
 build = [
   # GHC provides x86_64 and arm64 builds for macOS.
@@ -81,8 +61,11 @@ test-command = "pytest {package}/tests"
 test-extras = "test"
 # 19-06-2023:
 # Use custom manylinux and musllinux images with GHC 9.4.4 preinstalled.
-manylinux-x86_64-image = "wenkokke/manylinux_2_28_ghc944_x86_64"
+manylinux-x86_64-image = "wenkokke/manylinux2014_ghc944_x86_64"
 musllinux-x86_64-image = "wenkokke/musllinux_1_1_ghc944_x86_64"
+
+[tool.cibuildwheel.linux]
+before-all = "./scripts/before-all-linux.sh"
 
 [tool.mypy]
 mypy_path = "src"
@@ -94,7 +77,6 @@ implicit_reexport = false
 where = ["src"]
 
 [tool.setuptools.package-data]
-agda = ["*.txt"]
 "agda.data" = [
   "emacs-mode/*.el",
   "html/Agda.css",
@@ -155,7 +137,6 @@ platform =
   lin: linux
   mac: darwin
   win: win32
-allowlist_externals = sh
 extras =
   test
 commands =
