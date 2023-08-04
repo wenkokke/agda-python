@@ -10,7 +10,7 @@ build-backend = "setuptools.build_meta"
 name = "agda"
 version = "2.6.3.post1"
 authors = [{ name = "Wen Kokke", email = "wenkokke@users.noreply.github.com" }]
-description = "An experiment in publishing a Haskell library as a Python Wheel."
+description = "A project that packages Agda as a Python package."
 readme = "README.md"
 license = { file = "LICENSE" }
 classifiers = [
