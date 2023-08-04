@@ -98,7 +98,6 @@ jobs:
           config-file: "{package}/pyproject.toml"
         env:
           CIBW_ARCHS: "${{ matrix.os.arch }}"
-          CIBW_BEFORE: "cabal updates"
           CIBW_BUILD: "*${{ matrix.os.plat }}*"
           MACOSX_DEPLOYMENT_TARGET: "10.10"
 

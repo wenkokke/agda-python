@@ -40,6 +40,7 @@ test = ["pytest >=7.1,<8"]
 # 18-04-2023:
 # Cross-compilation does not work with GHC and Cabal.
 archs = ["native"]
+before-all = "cabal update"
 build-frontend = "build"
 build = [
   # GHC provides x86_64 and arm64 builds for macOS.
@@ -62,6 +63,9 @@ test-extras = "test"
 # Use custom manylinux and musllinux images with GHC 9.4.4 preinstalled.
 manylinux-x86_64-image = "wenkokke/manylinux2014_ghc944_x86_64"
 musllinux-x86_64-image = "wenkokke/musllinux_1_1_ghc944_x86_64"
+
+[tool.cibuildwheel.linux]
+before-all = "./script/before-all-linux.sh"
 
 [tool.mypy]
 mypy_path = "src"
