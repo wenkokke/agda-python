@@ -65,7 +65,7 @@ manylinux-x86_64-image = "wenkokke/manylinux2014_ghc944_x86_64"
 musllinux-x86_64-image = "wenkokke/musllinux_1_1_ghc944_x86_64"
 
 [tool.cibuildwheel.linux]
-before-all = "./script/before-all-linux.sh"
+before-all = "./scripts/before-all-linux.sh"
 
 [tool.mypy]
 mypy_path = "src"
