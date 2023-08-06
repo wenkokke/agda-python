@@ -1,0 +1,66 @@
+name: setup-agda
+description: "Installs Agda on the current runner"
+inputs:
+  agda-version:
+    description: "The version of Agda to install, defaults to latest"
+    required: false
+    default: ""
+  update-environment:
+    description: "Set this option if you want the action to update environment variables."
+    required: false
+    default: "true"
+outputs:
+  agda-path:
+    description: "The path to the agda executable"
+    value: ${{ steps.setup-agda.outputs.agda-path }}
+  agda-mode-path:
+    description: "The path to the agda-mode executable"
+    value: ${{ steps.setup-agda.outputs.agda-mode-path }}
+  agda-data-path:
+    description: "The path to the agda data directory"
+    value: ${{ steps.setup-agda.outputs.agda-data-path }}
+branding:
+  icon: feather
+  color: gray-dark
+
+runs:
+  using: composite
+  steps:
+    - # Set up a non-EOL & pipx supported Python version
+      id: setup-python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.8 - 3.11"
+        update-environment: false
+
+    - # Install Agda
+      id: setup-agda
+      run: |
+        PYTHON='${{ steps.setup-python.outputs.python-path }}'
+        # Ensure pipx is available
+        if ! type "pipx" > /dev/null; then
+          "${PYTHON}" -m pip install pipx
+        fi
+
+        # Install agda
+        LOWER_BOUND='${{ inputs.agda-version }}'
+        if [ "${LOWER_BOUND}" = '' ]; then
+          "${PYTHON}" -m pipx install --python "${PYTHON}" agda
+        else
+          UPPER_BOUND=$("${PYTHON}" -c "v='${LOWER_BOUND}'.split('.');print('.'.join([*v[:-1],str(int(v[-1])+1)]))")
+          "${PYTHON}" -m pipx install --python "${PYTHON}" "agda >=${LOWER_BOUND}, <${UPPER_BOUND}"
+        fi
+
+        # Set output variables
+        echo "agda-path=${PIPX_BIN_DIR}/agda" >> $GITHUB_OUTPUT
+        echo "agda-mode-path=${PIPX_BIN_DIR}/agda-mode" >> $GITHUB_OUTPUT
+        echo "agda-data-path=$("${PIPX_BIN_DIR}/agda" --print-agda-dir)" >> $GITHUB_OUTPUT
+      shell: bash
+      env:
+        # Set PIPX_BIN_DIR for a consistent install location
+        PIPX_BIN_DIR: "${{ env.HOME }}/.agda/bin"
+
+    - # Update environment
+      if: ${{ inputs.update-environment }} == 'true'
+      run: echo "${{ env.HOME }}/.agda/bin" >> $GITHUB_PATH
+      shell: bash
