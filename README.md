@@ -10,7 +10,7 @@ A project that packages Agda as a Python package, which allows you to install Ag
 pip install agda
 ```
 
-The PyPI package versions follow the [PvP] version numbers of Agda releases, with post-release versions—_e.g._, v2.6.3.post1—for patches and non-breaking changes to the documentation and packaging.
+The PyPI package versions follow the [PvP] version numbers of Agda releases, with post-release versions (_e.g._, `v2.6.3.post1`) for patches and non-breaking changes to the documentation and packaging.
 
 Binary wheels are provided for the following platforms:
 
@@ -22,6 +22,8 @@ Binary wheels are provided for the following platforms:
 |          | libc ≥2.28 | aarch64      |
 |          | musl ≥1.1  | x86_64       |
 | Windows  |            | AMD64        |
+
+The availability of binary wheels is largely determined by the availability of GHC binaries.
 
 For more information, see:
 
