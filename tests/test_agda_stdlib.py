@@ -14,7 +14,8 @@ KNOWN_FAILURES = {
     "2.6.3": [
         "src/Algebra/Operations/Semiring.agda",
         "src/Data/Bin/Properties.agda",
-    ]
+    ],
+    "2.6.2.2": [],
 }
 
 
