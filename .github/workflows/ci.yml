@@ -92,13 +92,12 @@ jobs:
           ghc-version: ${{ env.DEFAULT_GHC_VERSION }}
           cabal-version: ${{ env.DEFAULT_CABAL_VERSION }}
 
-      - uses: pypa/cibuildwheel@v2.14.1
+      - uses: pypa/cibuildwheel@v2.15.0
         with:
           output-dir: "./wheelhouse"
           config-file: "{package}/pyproject.toml"
         env:
           CIBW_ARCHS: "${{ matrix.os.arch }}"
-          CIBW_BEFORE: "cabal updates"
           CIBW_BUILD: "*${{ matrix.os.plat }}*"
           MACOSX_DEPLOYMENT_TARGET: "10.10"
 
