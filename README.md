@@ -23,6 +23,8 @@ Binary wheels are provided for the following platforms:
 |          | musl ≥1.1  | x86_64       |
 | Windows  |            | AMD64        |
 
+The availability of binary wheels is largely determined by the availability of GHC binaries.
+
 For more information, see:
 
 - [The Agda Source Code]
