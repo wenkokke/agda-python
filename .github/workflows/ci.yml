@@ -142,6 +142,10 @@ jobs:
           ghc-version: ${{ env.DEFAULT_GHC_VERSION }}
           cabal-version: ${{ env.DEFAULT_CABAL_VERSION }}
 
+      - # 19-05-2023:
+        # Required to run the tests on any OS.
+        run: cabal update
+
       - run: pipx run tox
 
   ################################################################################
