@@ -30,7 +30,7 @@ runs:
       id: setup-python
       uses: actions/setup-python@v4
       with:
-        python-version: "3.8 - 3.11"
+        python-version: "3.8 - 3.12"
         update-environment: false
 
     - # Install Agda
