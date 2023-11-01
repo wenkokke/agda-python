@@ -1,6 +1,6 @@
 packages:
   Agda-Python.cabal
 
-if !os(windows)
+if !os(windows) || !os(linux)
   package Agda
     flags: +optimise-heavily
