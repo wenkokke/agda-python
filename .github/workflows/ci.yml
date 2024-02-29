@@ -87,7 +87,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: "agda-${{ matrix.python.tag }}-${{ matrix.os.plat }}"
-          path: ./vehicle-python/wheelhouse/*.whl
+          path: ./wheelhouse/*.whl
 
   ################################################################################
   # Publish package to GitHub Releases
