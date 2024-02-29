@@ -35,27 +35,22 @@ jobs:
   ################################################################################
 
   build:
-    name: "Build / ${{ matrix.os.name }} / ${{ matrix.os.plat}}-${{ matrix.os.arch }}"
+    name: "${{ matrix.python.tag }}-${{ matrix.os.plat }}"
     runs-on: ${{ matrix.os.type }}
 
     strategy:
       fail-fast: false
       matrix:
         os:
-          - name: "Linux / GLIBC"
-            type: "ubuntu-latest"
+          - type: "ubuntu-latest"
             plat: "manylinux_x86_64"
-          - name: "Linux / MUSL"
-            type: "ubuntu-latest"
+          - type: "ubuntu-latest"
             plat: "musllinux_x86_64"
-          - name: "macOS"
-            type: "macos-latest"
+          - type: "macos-latest"
             plat: "macosx_x86_64"
-          - name: "macOS"
-            type: "macos-14"
+          - type: "macos-14"
             plat: "macosx_arm64"
-          - name: "Windows"
-            type: "windows-latest"
+          - type: "windows-latest"
             plat: "win_amd64"
         python:
           - tag: "cp37"
