@@ -59,6 +59,12 @@ jobs:
           - tag: "cp310"
           - tag: "cp311"
           - tag: "cp312"
+        exclude:
+          - os:
+              type: "macos-14"
+              plat: "macosx_arm64"
+            python:
+              tag: "cp37"
 
     steps:
       - uses: actions/checkout@v4
