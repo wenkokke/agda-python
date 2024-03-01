@@ -92,7 +92,7 @@ jobs:
       - name: Upload wheels
         uses: actions/upload-artifact@v4
         with:
-          name: "agda-${{ matrix.python.tag }}-${{ matrix.os.plat }}"
+          name: "wheelhouse-${{ matrix.python.tag }}-${{ matrix.os.plat }}"
           path: ./wheelhouse/*.whl
 
   ################################################################################
