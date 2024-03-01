@@ -3,7 +3,7 @@ import os
 import glob
 import subprocess
 import sys
-import pytest
+import pytest  # type: ignore
 
 # Path to Agda standard library:
 PACKAGE_ROOT = os.path.join(os.path.dirname(__file__), os.pardir)
@@ -30,7 +30,7 @@ KNOWN_FAILURES = {
         ]
         if relpath not in KNOWN_FAILURES[agda.VERSION]
     ],
-)
+)  # type: ignore
 def test_agda_stdlib(path: str) -> None:
     assert 0 == subprocess.check_call(
         [sys.executable, "-m", "agda", path], cwd=STD_LIB_ROOT
