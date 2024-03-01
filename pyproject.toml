@@ -69,7 +69,7 @@ musllinux-x86_64-image = "wenkokke/musllinux_1_1_ghc948_x86_64"
 
 [tool.mypy]
 mypy_path = "src"
-python_version = 3.7
+python_version = "3.7"
 strict = true
 implicit_reexport = false
 
@@ -77,52 +77,7 @@ implicit_reexport = false
 where = ["src"]
 
 [tool.setuptools.package-data]
-"agda.data" = [
-  "emacs-mode/*.el",
-  "html/Agda.css",
-  "html/highlight-hover.js",
-  "JS/agda-rts.js",
-  "latex/agda.sty",
-  "latex/postprocess-latex.pl",
-  "lib/prim/Agda/Builtin/Bool.agda",
-  "lib/prim/Agda/Builtin/Char.agda",
-  "lib/prim/Agda/Builtin/Char/Properties.agda",
-  "lib/prim/Agda/Builtin/Coinduction.agda",
-  "lib/prim/Agda/Builtin/Cubical/Path.agda",
-  "lib/prim/Agda/Builtin/Cubical/Id.agda",
-  "lib/prim/Agda/Builtin/Cubical/Sub.agda",
-  "lib/prim/Agda/Builtin/Cubical/Glue.agda",
-  "lib/prim/Agda/Builtin/Cubical/HCompU.agda",
-  "lib/prim/Agda/Builtin/Equality.agda",
-  "lib/prim/Agda/Builtin/Equality/Erase.agda",
-  "lib/prim/Agda/Builtin/Equality/Rewrite.agda",
-  "lib/prim/Agda/Builtin/Float.agda",
-  "lib/prim/Agda/Builtin/Float/Properties.agda",
-  "lib/prim/Agda/Builtin/FromNat.agda",
-  "lib/prim/Agda/Builtin/FromNeg.agda",
-  "lib/prim/Agda/Builtin/FromString.agda",
-  "lib/prim/Agda/Builtin/IO.agda",
-  "lib/prim/Agda/Builtin/Int.agda",
-  "lib/prim/Agda/Builtin/List.agda",
-  "lib/prim/Agda/Builtin/Maybe.agda",
-  "lib/prim/Agda/Builtin/Nat.agda",
-  "lib/prim/Agda/Builtin/Reflection.agda",
-  "lib/prim/Agda/Builtin/Reflection/External.agda",
-  "lib/prim/Agda/Builtin/Reflection/Properties.agda",
-  "lib/prim/Agda/Builtin/Sigma.agda",
-  "lib/prim/Agda/Builtin/Size.agda",
-  "lib/prim/Agda/Builtin/Strict.agda",
-  "lib/prim/Agda/Builtin/String.agda",
-  "lib/prim/Agda/Builtin/String/Properties.agda",
-  "lib/prim/Agda/Builtin/TrustMe.agda",
-  "lib/prim/Agda/Builtin/Unit.agda",
-  "lib/prim/Agda/Builtin/Word.agda",
-  "lib/prim/Agda/Builtin/Word/Properties.agda",
-  "lib/prim/Agda/Primitive.agda",
-  "lib/prim/Agda/Primitive/Cubical.agda",
-  "MAlonzo/src/MAlonzo/*.hs",
-  "MAlonzo/src/MAlonzo/RTE/*.hs"
-]
+"agda.data" = ["**/*"]
 
 [tool.tox]
 legacy_tox_ini = """
