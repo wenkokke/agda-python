@@ -8,7 +8,7 @@ To update the Agda version, change the version bound in `Agda-Python.cabal`:
 foreign-library _binding
   ...
   build-depends:
-    , Agda       ==2.6.3
+    , Agda       ==2.6.4.1
     ...
 ```
 
@@ -25,8 +25,8 @@ To update the GHC version used for macOS and Windows builds, change the values o
 
 ```yaml
 env:
-  DEFAULT_GHC_VERSION: "9.4.4"
-  DEFAULT_CABAL_VERSION: "3.10.1.0"
+  DEFAULT_GHC_VERSION: "9.4.8"
+  DEFAULT_CABAL_VERSION: "3.10.2.1"
 ```
 
 The Python wheels for Linux are built using the [wenkokke/manylinux_ghc] images, which are copies of the [pypa/manylinux] images with GHC preinstalled.
@@ -35,8 +35,8 @@ To update the GHC version used for Linux builds, change the images set in `pypro
 
 ```toml
 [tool.cibuildwheel]
-manylinux-x86_64-image = "wenkokke/manylinux_2_28_ghc944_x86_64"
-musllinux-x86_64-image = "wenkokke/musllinux_1_1_ghc944_x86_64"
+manylinux-x86_64-image = "wenkokke/manylinux_2_28_ghc948_x86_64"
+musllinux-x86_64-image = "wenkokke/musllinux_1_1_ghc948_x86_64"
 ```
 
 ## Update the list of data files
