@@ -9,12 +9,18 @@ import pytest  # type: ignore
 PACKAGE_ROOT = os.path.join(os.path.dirname(__file__), os.pardir)
 STD_LIB_ROOT = os.path.abspath(os.path.join(PACKAGE_ROOT, "vendor", "agda", "std-lib"))
 
-# Known failures for Agda 2.6.3
+# Known failures for various Agda versions
 KNOWN_FAILURES = {
+    "2.6.4.1": [
+        "src/Data/Fin/Substitution/Example.agda",
+        "src/Algebra/Operations/Semiring.agda",
+        "src/Algebra/Properties/DistributiveLattice.agda",
+        "src/Algebra/Properties/BooleanAlgebra.agda",
+    ],
     "2.6.3": [
         "src/Algebra/Operations/Semiring.agda",
         "src/Data/Bin/Properties.agda",
-    ]
+    ],
 }
 
 
@@ -28,7 +34,7 @@ KNOWN_FAILURES = {
                 os.path.join(STD_LIB_ROOT, "src", "**", "*.agda"), recursive=True
             )
         ]
-        if relpath not in KNOWN_FAILURES[agda.VERSION]
+        if relpath not in KNOWN_FAILURES.get(agda.VERSION, ())
     ],
 )  # type: ignore
 def test_agda_stdlib(path: str) -> None:
