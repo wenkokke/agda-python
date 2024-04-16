@@ -71,6 +71,11 @@ jobs:
         with:
           submodules: true
 
+      - # Workaround for out-of-memory error
+        # See: https://github.com/pypa/cibuildwheel/issues/1586
+        if: runner.os == 'Linux'
+        run: docker system prune -a -f
+
       - # 19-05-2023:
         # Required to build the wheels on macOS and Windows, but not on Linux,
         # as Linux builds are run in containers, where GHC and Cabal are built
