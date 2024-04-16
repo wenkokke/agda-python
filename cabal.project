@@ -4,3 +4,6 @@ packages:
 if !os(windows) || !os(linux)
   package Agda
     flags: +optimise-heavily
+
+-- 2024-04-16: Build Agda 2.6.4.1 with GHC 9.6.4
+allow-newer: Agda-Python-2.6.4.1:base
