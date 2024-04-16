@@ -61,11 +61,11 @@ skip = [
 test-command = "pytest {package}/tests"
 test-extras = "test"
 # 19-06-2023:
-# Use custom manylinux and musllinux images with GHC 9.4.8 preinstalled.
-manylinux-aarch64-image = "wenkokke/manylinux_2_28_ghc948_aarch64"
-manylinux-i686-image = "wenkokke/manylinux2014_ghc948_i686"
-manylinux-x86_64-image = "wenkokke/manylinux2014_ghc948_x86_64"
-musllinux-x86_64-image = "wenkokke/musllinux_1_1_ghc948_x86_64"
+# Use custom manylinux and musllinux images with GHC 9.6.4 preinstalled.
+manylinux-aarch64-image = "wenkokke/manylinux_2_28_ghc964_aarch64"
+manylinux-i686-image = "wenkokke/manylinux2014_ghc964_i686"
+manylinux-x86_64-image = "wenkokke/manylinux2014_ghc964_x86_64"
+musllinux-x86_64-image = "wenkokke/musllinux_1_1_ghc964_x86_64"
 
 [tool.mypy]
 mypy_path = "src"
