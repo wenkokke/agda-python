@@ -99,6 +99,8 @@ jobs:
         with:
           name: "wheelhouse-${{ matrix.python.tag }}-${{ matrix.os.plat }}"
           path: ./wheelhouse/*.whl
+        # Always upload wheels, even if the build failed
+        if: always()
 
   ################################################################################
   # Publish package to GitHub Releases
