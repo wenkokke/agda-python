@@ -45,9 +45,9 @@ foreign-library _binding
 
   build-depends:
     , Agda       ==2.6.4.1
-    , base       >=4.9.0.0 && <4.18
-    , directory  >=1.2.6.2 && <1.4
-    , filepath   >=1.4.1.0 && <1.5
-    , process    >=1.4.2.0 && <1.7
+    , base
+    , directory
+    , filepath
+    , process
 
   default-language: Haskell2010
