@@ -1,6 +1,6 @@
 cabal-version:   3.0
 name:            Agda-Python
-version:         2.6.4.1
+version:         2.6.4.3
 description:
   Python bindings for the Agda programming language and proof assistant.
 

@@ -8,7 +8,7 @@ To update the Agda version, change the version bound in `Agda-Python.cabal`:
 foreign-library _binding
   ...
   build-depends:
-    , Agda       ==2.6.4.1
+    , Agda       ==2.6.4.3
     ...
 ```
 
