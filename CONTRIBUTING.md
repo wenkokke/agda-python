@@ -1,8 +1,6 @@
 # Contributing to Agda for Python
 
-## How to update for new Agda versions?
-
-### Update the Agda version
+## Update the Agda version
 
 - [ ] Change the tag of the Git submodule at `vendor/agda`:
 
@@ -41,7 +39,7 @@
 
 - [ ] Change the version in the preceding steps.
 
-### Update the GHC version
+## Update the GHC version
 
 Updating the version for the macOS and Windows builds is easy, and only requires changing the default GHC and Cabal versions as listed in `ci.yml`.
 
@@ -68,7 +66,7 @@ If no `manylinux_ghc` images exist for the GHC version you wish to use, you will
   + musllinux-x86_64-image = "wenkokke  musllinux_1_1_ghc965_x86_64"
   ```
 
-### Add a Python version
+## Add or remove a Python version
 
 - [ ] Change the `requires-python` version range in `pyproject.toml`:
 
@@ -204,51 +202,11 @@ If no `manylinux_ghc` images exist for the GHC version you wish to use, you will
     3.7
   ```
 
+## Release a new Agda version
 
-## How to create a new release?
-
-1. Update the Agda version
-
-   - in `build-depends`—see [above](#update-the-agda-version);
-   - in `Agda-Python.cabal`;
-   - in `pyproject.toml`; and
-   - in `src/agda/__init__.py`.
-
-2. Create a new tag `v<new_version>`.
-
-   The CI builds wheels for x86_64 architectures and publishes them to PyPI and GitHub Releases.
-
-3. Build wheels for macOS ARM64.
-
-   On macOS with an ARM64 chipset, run:
-
-   ```bash
-   pipx run tox
-   ```
-
-   The wheels will be built to `dist/`.
-
-4. Build wheels for Linux aarch64.
-
-   On any machine with an ARM64 chipset, run:
-
-   ```bash
-   ./scripts/docker-build-wheels.sh
-   ```
-
-   The wheels will be built to `dist/`.
-
-5. Check the wheels:
-
-   ```bash
-   pipx run twine check --strict dist/*.whl
-   ```
-
-6. Upload the wheels:
-
-   ```bash
-   pipx run twine upload dist/*.whl
-   ```
+1. Update the Agda version (see [above](#update-the-agda-version)).
+2. Wait for the tests to pass on CI.
+3. Create and push a new tag named `v<AGDA_VERSION>`.
 
 [wenkokke/manylinux_ghc]: https://github.com/wenkokke/manylinux_ghc
 [pypa/manylinux]: https://github.com/pypa/manylinux
