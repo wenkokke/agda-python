@@ -86,7 +86,7 @@ jobs:
           ghc-version: ${{ env.DEFAULT_GHC_VERSION }}
           cabal-version: ${{ env.DEFAULT_CABAL_VERSION }}
 
-      - uses: pypa/cibuildwheel@v2.18.1
+      - uses: pypa/cibuildwheel@v2.19.0
         with:
           output-dir: "./wheelhouse"
           config-file: "{package}/pyproject.toml"
