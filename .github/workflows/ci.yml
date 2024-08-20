@@ -18,6 +18,11 @@ defaults:
   run:
     shell: sh
 
+# Limit concurrent runs to one per branch
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   # 04-08-2023:
   # cibuildwheel builds linux wheels in a manylinux_ghc container, which
