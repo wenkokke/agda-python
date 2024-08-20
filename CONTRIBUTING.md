@@ -7,7 +7,7 @@
   ```bash
   cd vendor/agda
   git fetch
-  git checkout v2.6.4.3
+  git checkout v2.7.0
   ```
 
 - [ ] Change the version bound in `Agda-Python.cabal`:
@@ -16,8 +16,8 @@
   foreign-library _binding
   ...
   build-depends:
-  -  , Agda       ==2.6.4.1
-  +  , Agda       ==2.6.4.3
+  -  , Agda       ==2.6.4.3
+  +  , Agda       ==2.7.0
      ...
   ```
 
@@ -26,15 +26,15 @@
   ```diff
     [project]
     name = "agda"
-  - version = "2.6.4.1"
-  + version = "2.6.4.3"
+  - version = "2.6.4.3"
+  + version = "2.7.0"
   ```
 
 - [ ] Change the version in `src/agda/__init__.py`:
 
   ```diff
-  - VERSION: str = "2.6.4.1"
-  + VERSION: str = "2.6.4.3"
+  - VERSION: str = "2.6.4.3"
+  + VERSION: str = "2.7.0"
   ```
 
 - [ ] Change the version in the preceding steps.
