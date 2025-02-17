@@ -56,8 +56,11 @@ build = [
 ]
 skip = [
   # 18-04-2023:
-  # PyPy builds do not work.
+  # Builds for PyPy do not work.
   "pp*",
+  # 17-02-2025:
+  # Builds for cp37-musllinux_x86_64 no longer work.
+  "cp37-musllinux_x86_64"
 ]
 test-command = "pytest {package}/tests"
 test-extras = "test"

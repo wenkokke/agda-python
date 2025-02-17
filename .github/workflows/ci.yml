@@ -70,6 +70,11 @@ jobs:
               plat: "macosx_arm64"
             python:
               tag: "cp37"
+          - os:
+              type: "ubuntu-latest"
+              plat: "musllinux_x86_64"
+            python:
+              tag: "cp37"
 
     steps:
       - uses: actions/checkout@v4
