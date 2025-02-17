@@ -51,7 +51,7 @@ jobs:
             plat: "manylinux_x86_64"
           - type: "ubuntu-latest"
             plat: "musllinux_x86_64"
-          - type: "macos-12"
+          - type: "macos-13"
             plat: "macosx_x86_64"
           - type: "macos-14"
             plat: "macosx_arm64"
