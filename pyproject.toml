@@ -13,7 +13,7 @@ authors = [{ name = "Wen Kokke", email = "wenkokke@users.noreply.github.com" }]
 description = "A project that packages Agda as a Python package."
 readme = "README.md"
 license = { file = "LICENSE" }
-requires-python = ">=3.7.1,<3.13"
+requires-python = ">=3.7.1,<3.14"
 classifiers = [
   "License :: OSI Approved :: MIT License",
   "Operating System :: MacOS",
@@ -25,6 +25,7 @@ classifiers = [
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: Implementation :: CPython",
 ]
 
@@ -50,7 +51,7 @@ build = [
   "*-win_amd64",
   # GHC provides an x86_64 build for CentOS 7 (manylinux2014).
   "*-manylinux_x86_64",
-  # GHC provides an x86_64 build for Alpine 3.12 (manylinux_2_28 compatible).
+  # GHC provides an x86_64 build for Alpine 3.12.
   "*-musllinux_x86_64",
 ]
 skip = [
@@ -83,9 +84,9 @@ where = ["src"]
 legacy_tox_ini = """
 [tox]
 min_version = 4
-env_list = py{37,38,39,310,311,312}-{lin,mac,win}
+env_list = py{37,38,39,310,311,312,313}-{lin,mac,win}
 
-[testenv:py{37,38,39,310,311,312}-{lin,mac,win}]
+[testenv:py{37,38,39,310,311,312,313}-{lin,mac,win}]
 package = external
 package_env = build-{env_name}
 platform =
@@ -97,7 +98,7 @@ extras =
 commands =
   {env_python} -m pytest {posargs}
 
-[testenv:build-py{37,38,39,310,311,312}-{lin,mac,win}]
+[testenv:build-py{37,38,39,310,311,312,313}-{lin,mac,win}]
 deps =
   build
   auditwheel; sys_platform == 'linux'
@@ -114,18 +115,21 @@ package_glob =
   py310-lin: {env:dist_dir}{/}*cp310*manylinux*.whl
   py311-lin: {env:dist_dir}{/}*cp311*manylinux*.whl
   py312-lin: {env:dist_dir}{/}*cp312*manylinux*.whl
+  py313-lin: {env:dist_dir}{/}*cp313*manylinux*.whl
   py37-mac: {env:dist_dir}{/}*cp37*macosx*.whl
   py38-mac: {env:dist_dir}{/}*cp38*macosx*.whl
   py39-mac: {env:dist_dir}{/}*cp39*macosx*.whl
   py310-mac: {env:dist_dir}{/}*cp310*macosx*.whl
   py311-mac: {env:dist_dir}{/}*cp311*macosx*.whl
   py312-mac: {env:dist_dir}{/}*cp312*macosx*.whl
+  py313-mac: {env:dist_dir}{/}*cp313*macosx*.whl
   py37-win: {env:dist_dir}{/}*cp37*win*.whl
   py38-win: {env:dist_dir}{/}*cp38*win*.whl
   py39-win: {env:dist_dir}{/}*cp39*win*.whl
   py310-win: {env:dist_dir}{/}*cp310*win*.whl
   py311-win: {env:dist_dir}{/}*cp311*win*.whl
   py312-win: {env:dist_dir}{/}*cp312*win*.whl
+  py313-win: {env:dist_dir}{/}*cp313*win*.whl
 allowlist_externals =
   sh
 commands =
