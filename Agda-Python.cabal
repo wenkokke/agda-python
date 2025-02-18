@@ -1,6 +1,6 @@
 cabal-version:   3.0
 name:            Agda-Python
-version:         2.7.0
+version:         2.7.0.1
 description:
   Python bindings for the Agda programming language and proof assistant.
 
@@ -44,7 +44,7 @@ foreign-library _binding
     Paths_Agda_Python
 
   build-depends:
-    , Agda       ==2.7.0
+    , Agda       ==2.7.0.1
     , base
     , directory
     , filepath

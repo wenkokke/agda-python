@@ -8,7 +8,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "agda"
-version = "2.7.0"
+version = "2.7.0.1"
 authors = [{ name = "Wen Kokke", email = "wenkokke@users.noreply.github.com" }]
 description = "A project that packages Agda as a Python package."
 readme = "README.md"
