@@ -20,7 +20,7 @@ Binary wheels are provided for the following platforms:
 |          | ≥13.0      | ARM64        |
 | Linux    | libc ≥2.17 | x86_64       |
 |          | libc ≥2.28 | aarch64      |
-|          | musl ≥1.1  | x86_64       |
+|          | musl ≥1.2  | x86_64       |
 | Windows  |            | AMD64        |
 
 The availability of binary wheels is largely determined by the availability of GHC binaries.
