@@ -1,6 +1,10 @@
+include Setup.hs
 include Agda-Python.cabal
 include src/agda/binding.def
 include src/agda/Binding.hs
 include src/agda/binding.i
 include src/agda/binding*.so
 include src/agda/binding*.pyd
+include src/agda/Paths_Agda.hs
+recursive-include data *
+recursive-include vendor *

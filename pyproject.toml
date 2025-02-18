@@ -80,9 +80,6 @@ implicit_reexport = false
 [tool.setuptools.packages.find]
 where = ["src"]
 
-[tool.setuptools.package-data]
-"agda.data" = ["**/*"]
-
 [tool.tox]
 legacy_tox_ini = """
 [tox]
