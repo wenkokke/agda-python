@@ -37,4 +37,4 @@ def version() -> str:
 
 def main(args: List[str] = []) -> int:
     with hs_rts_init(args):
-        return unsafe_hs_exit()
+        return unsafe_hs_agda_main()
