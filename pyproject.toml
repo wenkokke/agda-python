@@ -8,11 +8,11 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "agda"
-version = "2.7.0.1"
+version = "2.8.0"
 authors = [{ name = "Wen Kokke", email = "wenkokke@users.noreply.github.com" }]
 description = "A project that packages Agda as a Python package."
 readme = "README.md"
-license = { file = "LICENSE" }
+license-files = [ "LICENSE" ]
 requires-python = ">=3.7.1,<3.14"
 classifiers = [
   "License :: OSI Approved :: MIT License",
