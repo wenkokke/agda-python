@@ -1,5 +1,6 @@
 packages:
   Agda-Python.cabal
+  vendor/agda/Agda.cabal
 
 if !os(windows) || !os(linux)
   package Agda

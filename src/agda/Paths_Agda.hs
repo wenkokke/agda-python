@@ -13,7 +13,6 @@ module Paths_Agda
 where
 
 import qualified Control.Exception as Exception
-import Data.Version (Version (..))
 import Paths_Agda_Python (getBinDir, getDataFileName, getDynLibDir, getLibDir, getLibexecDir, getSysconfDir, version)
 import qualified Paths_Agda_Python (getDataDir)
 import System.Environment (getEnv)
