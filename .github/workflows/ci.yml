@@ -55,7 +55,7 @@ jobs:
             plat: "macosx_x86_64"
           - type: "macos-latest"
             plat: "macosx_arm64"
-          - type: "windows-latest"
+          - type: "windows-2022"
             plat: "win_amd64"
         python:
           - tag: "cp39"
