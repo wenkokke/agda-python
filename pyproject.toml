@@ -19,7 +19,6 @@ classifiers = [
   "Operating System :: MacOS",
   "Operating System :: Microsoft :: Windows",
   "Operating System :: POSIX :: Linux",
-  "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
@@ -75,9 +74,9 @@ where = ["src"]
 legacy_tox_ini = """
 [tox]
 min_version = 4
-env_list = py{38,39,310,311,312,313}-{lin,mac,win}
+env_list = py{39,310,311,312,313}-{lin,mac,win}
 
-[testenv:py{38,39,310,311,312,313}-{lin,mac,win}]
+[testenv:py{39,310,311,312,313}-{lin,mac,win}]
 package = external
 package_env = build-{env_name}
 platform =
@@ -89,7 +88,7 @@ extras =
 commands =
   {env_python} -m pytest {posargs}
 
-[testenv:build-py{38,39,310,311,312,313}-{lin,mac,win}]
+[testenv:build-py{39,310,311,312,313}-{lin,mac,win}]
 deps =
   build
   auditwheel; sys_platform == 'linux'
@@ -100,19 +99,16 @@ set_env =
   dist_dir = {package_root}{/}dist
   dist_tmp_dir = {env_tmp_dir}{/}dist
 package_glob =
-  py38-lin: {env:dist_dir}{/}*cp38*manylinux*.whl
   py39-lin: {env:dist_dir}{/}*cp39*manylinux*.whl
   py310-lin: {env:dist_dir}{/}*cp310*manylinux*.whl
   py311-lin: {env:dist_dir}{/}*cp311*manylinux*.whl
   py312-lin: {env:dist_dir}{/}*cp312*manylinux*.whl
   py313-lin: {env:dist_dir}{/}*cp313*manylinux*.whl
-  py38-mac: {env:dist_dir}{/}*cp38*macosx*.whl
   py39-mac: {env:dist_dir}{/}*cp39*macosx*.whl
   py310-mac: {env:dist_dir}{/}*cp310*macosx*.whl
   py311-mac: {env:dist_dir}{/}*cp311*macosx*.whl
   py312-mac: {env:dist_dir}{/}*cp312*macosx*.whl
   py313-mac: {env:dist_dir}{/}*cp313*macosx*.whl
-  py38-win: {env:dist_dir}{/}*cp38*win*.whl
   py39-win: {env:dist_dir}{/}*cp39*win*.whl
   py310-win: {env:dist_dir}{/}*cp310*win*.whl
   py311-win: {env:dist_dir}{/}*cp311*win*.whl

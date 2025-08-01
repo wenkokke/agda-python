@@ -58,7 +58,6 @@ jobs:
           - type: "windows-latest"
             plat: "win_amd64"
         python:
-          - tag: "cp38"
           - tag: "cp39"
           - tag: "cp310"
           - tag: "cp311"
