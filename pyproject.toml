@@ -52,14 +52,6 @@ build = [
   # GHC provides an x86_64 build for Alpine 3.12.
   "*-musllinux_x86_64",
 ]
-skip = [
-  # 18-04-2023:
-  # Builds for PyPy do not work.
-  "pp*",
-  # 17-02-2025:
-  # Builds for cp37-musllinux_x86_64 no longer work.
-  "cp37-musllinux_x86_64"
-]
 test-command = "pytest {package}/tests"
 test-extras = "test"
 # 19-06-2023:
