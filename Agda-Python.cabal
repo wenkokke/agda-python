@@ -44,7 +44,7 @@ foreign-library _binding
     Paths_Agda_Python
 
   build-depends:
-    , Agda       ==2.7.20250510
+    , Agda       ==2.8.0
     , base
     , directory
     , filepath
