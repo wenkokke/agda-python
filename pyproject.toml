@@ -1,7 +1,7 @@
 [build-system]
 requires = [
   "find_libpython >=0.3,<0.5; sys_platform == 'win32'",
-  "setuptools >=45",
+  "setuptools >=77.0.3",
   "swig >=4,<5"
 ]
 build-backend = "setuptools.build_meta"
