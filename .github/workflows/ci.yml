@@ -30,8 +30,8 @@ env:
   # you must update the containers in pyproject.toml under tool.cibuildwheel.
   #
   # See: https://github.com/wenkokke/manylinux_ghc
-  DEFAULT_GHC_VERSION: "9.6.4"
-  DEFAULT_CABAL_VERSION: "3.10.3.0"
+  DEFAULT_GHC_VERSION: "9.6.5"
+  DEFAULT_CABAL_VERSION: "3.12.1.0"
   DEFAULT_PYTHON_VERSION: "3.12"
 
 jobs:
@@ -53,28 +53,16 @@ jobs:
             plat: "musllinux_x86_64"
           - type: "macos-13"
             plat: "macosx_x86_64"
-          - type: "macos-14"
+          - type: "macos-latest"
             plat: "macosx_arm64"
-          - type: "windows-latest"
+          - type: "windows-2022"
             plat: "win_amd64"
         python:
-          - tag: "cp37"
-          - tag: "cp38"
           - tag: "cp39"
           - tag: "cp310"
           - tag: "cp311"
           - tag: "cp312"
-        exclude:
-          - os:
-              type: "macos-14"
-              plat: "macosx_arm64"
-            python:
-              tag: "cp37"
-          - os:
-              type: "ubuntu-latest"
-              plat: "musllinux_x86_64"
-            python:
-              tag: "cp37"
+          # - tag: "cp313"
 
     steps:
       - uses: actions/checkout@v5
@@ -96,7 +84,7 @@ jobs:
           ghc-version: ${{ env.DEFAULT_GHC_VERSION }}
           cabal-version: ${{ env.DEFAULT_CABAL_VERSION }}
 
-      - uses: pypa/cibuildwheel@v2.23.3
+      - uses: pypa/cibuildwheel@v3.1.3
         with:
           output-dir: "./wheelhouse"
           config-file: "{package}/pyproject.toml"
