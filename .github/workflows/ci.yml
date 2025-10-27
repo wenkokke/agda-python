@@ -105,7 +105,7 @@ jobs:
           CIBW_BUILD: "${{ matrix.python.tag }}-${{ matrix.os.plat }}"
 
       - name: Upload wheels
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: "wheelhouse-${{ matrix.python.tag }}-${{ matrix.os.plat }}"
           path: ./wheelhouse/*.whl
