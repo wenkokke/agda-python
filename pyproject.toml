@@ -31,7 +31,7 @@ classifiers = [
 
 [project.optional-dependencies]
 mypy = ["types_setuptools >=45"]
-test = ["pytest >=7.1,<9"]
+test = ["pytest >=7.1,<10"]
 
 [project.scripts]
 "agda" = "agda.__main__:main"
